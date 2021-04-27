@@ -1,0 +1,13 @@
+For checking where to need testing we use 'coverage' package:-
+pip install coverage
+--> 'coverage run manage.py test' to run tests.
+--> 'coverage report' will show what is behind the scenes.
+--> "coverage run --omit='*/.venv/*' manage.py test" to exclude unnecessary files. And after this do report.
+--> 'coverage html' will make 'htmlcov' folder and from there open index.html in browser.
+
+We can also return just context in views.
+To make a view accessible to every single page add it to context_processors in settings.py
+
+To pre-populate any field in admin.py use 'pre-populate' field.
+Install flake8-isort for sorting imports according to pep8.
+Use it by typing 'isort .' in terminal.
