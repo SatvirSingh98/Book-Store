@@ -11,3 +11,18 @@ To make a view accessible to every single page add it to context_processors in s
 To pre-populate any field in admin.py use 'pre-populate' field.
 Install flake8-isort for sorting imports according to pep8.
 Use it by typing 'isort .' in terminal.
+
+How django works with sessions:
+--> We start the browser, request the page from django and then it creates a new session.
+--> That session data is stores in database as session_key, session_data and it's expiry_date.
+--> Then django will return the requested page with session_key.
+--> In frontend we store that session_key in a cookie.
+--> By doing this, action performed by user to change it's data in frontend will also get changed in database.
+    --> If user change the data, a request and session_key of that user is sent to django and the corresponding session_data is modified in database.
+    --> Changes in the browser are reflected on page refresh and redirect.
+    --> To prevent refreshing everytime we use AJAX.
+ ```
+ from django.contrib.sessions.models import Session
+ s = Session.objects.get(pk='session_key')
+ s.get_decoded()
+ ```
