@@ -26,3 +26,5 @@ How django works with sessions:
  s = Session.objects.get(pk='session_key')
  s.get_decoded()
  ```
+
+ To retrieve the data from the sessions we have to use __iter__() in Basket.py, because we cannot extract data from sessions. We need to iterarte over database to get data.

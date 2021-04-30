@@ -2,8 +2,8 @@ from django.contrib.auth import get_user_model
 from django.test import TestCase
 from django.urls import reverse
 
-from store.models import Category, Product
-from store.utils import unique_slug_generator
+from apps.store.models import Category, Product
+from core.utils import unique_slug_generator
 
 User = get_user_model()
 
@@ -31,8 +31,7 @@ class TestCategoriesModel(TestCase):
         Test category model slug and URL reverse
         """
         data = self.data1
-        response = self.client.post(reverse('store:category_list',
-                                            args=[data.slug]))
+        response = self.client.post(reverse('store:category_list', args=[data.slug]))
         self.assertEqual(response.status_code, 200)
 
     def test_category_unique_slug(self):
@@ -82,8 +81,7 @@ class TestProductsModel(TestCase):
         Test product model slug and URL reverse
         """
         data = self.data1
-        response = self.client.post(reverse('store:product_detail',
-                                            args=[data.slug]))
+        response = self.client.post(reverse('store:product_detail', args=[data.slug]))
         self.assertEqual(response.status_code, 200)
 
     def test_product_unique_slug(self):

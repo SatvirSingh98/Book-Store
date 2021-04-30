@@ -17,10 +17,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Category',
             fields=[
-                ('id', models.BigAutoField(auto_created=True,
-                                           primary_key=True,
-                                           serialize=False,
-                                           verbose_name='ID')),
+                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('name', models.CharField(db_index=True, max_length=120)),
                 ('slug', models.SlugField(blank=True, unique=True)),
             ],
@@ -31,26 +28,21 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Product',
             fields=[
-                ('id', models.BigAutoField(auto_created=True,
-                 primary_key=True, serialize=False, verbose_name='ID')),
+                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('title', models.CharField(max_length=120)),
-                ('author', models.CharField(default='Anonymous',
-                                            max_length=50)),
+                ('author', models.CharField(default='Anonymous', max_length=50)),
                 ('description', models.TextField(blank=True)),
                 ('image', models.ImageField(upload_to='images/')),
                 ('slug', models.SlugField(blank=True, unique=True)),
-                ('price', models.DecimalField(
-                    decimal_places=2, default=0, max_digits=5)),
+                ('price', models.DecimalField(decimal_places=2, default=0, max_digits=5)),
                 ('in_stock', models.BooleanField(default=True)),
                 ('is_active', models.BooleanField(default=True)),
                 ('created', models.DateTimeField(auto_now_add=True)),
                 ('updated', models.DateTimeField(auto_now=True)),
-                ('category', models.ForeignKey(
-                    on_delete=django.db.models.deletion.CASCADE,
-                    related_name='product', to='store.category')),
-                ('created_by', models.ForeignKey(
-                    on_delete=django.db.models.deletion.CASCADE,
-                    related_name='product', to=settings.AUTH_USER_MODEL)),
+                ('category', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE,
+                                               related_name='product', to='store.category')),
+                ('created_by', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE,
+                                                 related_name='product', to=settings.AUTH_USER_MODEL)),
             ],
             options={
                 'ordering': ('-created',),

@@ -1,12 +1,14 @@
+from importlib import import_module
 from unittest import skip
 
+from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.http import HttpRequest
 from django.test import RequestFactory, TestCase
 from django.urls import reverse
 
-from store.models import Category, Product
-from store.views import all_products
+from apps.store.models import Category, Product
+from apps.store.views import all_products
 
 User = get_user_model()
 
@@ -47,16 +49,14 @@ class TestViewResponses(TestCase):
         """
         Test category response status
         """
-        response = self.client.get(reverse('store:category_list',
-                                           args=['django']))
+        response = self.client.get(reverse('store:category_list', args=['django']))
         self.assertEqual(response.status_code, 200)
 
     def test_product_detail_url(self):
         """
         Test items response status
         """
-        response = self.client.get(reverse('store:product_detail',
-                                           args=['django-beginners']))
+        response = self.client.get(reverse('store:product_detail', args=['django-beginners']))
         self.assertEqual(response.status_code, 200)
 
     def test_homepage_html(self):
@@ -64,6 +64,9 @@ class TestViewResponses(TestCase):
         Example: code validation, search HTML for text
         """
         request = HttpRequest()
+        engine = import_module(settings.SESSION_ENGINE)
+        session_key = None
+        request.session = engine.SessionStore(session_key)
         response = all_products(request)
         html = response.content.decode('utf8')
         self.assertIn('<title>Book Store</title>', html)
@@ -75,6 +78,9 @@ class TestViewResponses(TestCase):
         Example: Using request factory
         """
         request = self.factory.get('/django-beginners')
+        engine = import_module(settings.SESSION_ENGINE)
+        session_key = None
+        request.session = engine.SessionStore(session_key)
         response = all_products(request)
         html = response.content.decode('utf8')
         self.assertIn('<title>Book Store</title>', html)

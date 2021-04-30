@@ -4,7 +4,7 @@ from django.db.models.signals import pre_save
 from django.dispatch import receiver
 from django.urls import reverse
 
-from .utils import unique_slug_generator
+from core.utils import unique_slug_generator
 
 User = settings.AUTH_USER_MODEL
 
@@ -35,15 +35,12 @@ class ProductManager(models.Manager):
 
 
 class Product(models.Model):
-    category = models.ForeignKey(Category, related_name='product',
-                                 on_delete=models.CASCADE)
-    created_by = models.ForeignKey(User, related_name='product',
-                                   on_delete=models.CASCADE)
+    category = models.ForeignKey(Category, related_name='product', on_delete=models.CASCADE)
+    created_by = models.ForeignKey(User, related_name='product', on_delete=models.CASCADE)
     title = models.CharField(max_length=120)
     author = models.CharField(max_length=50, default='Anonymous')
     description = models.TextField(blank=True)
-    image = models.ImageField(upload_to='images/',
-                              default='images/default.png')
+    image = models.ImageField(upload_to='images/', default='images/default.png')
     slug = models.SlugField(unique=True, blank=True)
     price = models.DecimalField(default=0, max_digits=5, decimal_places=2)
     in_stock = models.BooleanField(default=True)
